@@ -1,0 +1,87 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Robojini/Tuturial_UI_Library/main/UI_Template_1"))()
+ 
+local Window = Library.CreateLib("SSwendRT", "RJTheme3")
+
+local Tab = Window:NewTab("Locations")
+
+-- Подсекция
+local Section = Tab:NewSection("Creator Version")
+
+-- Заголовок
+Section:NewLabel("Teleports")
+
+Section:NewButton("Lobby", "ButtonInfo", function()
+local player = game.Players.LocalPlayer
+player.Character.HumanoidRootPart.CFrame = CFrame.new(-3.45624423, -103.310448, 407.252533, 0.971002877, -3.05039038e-09, 0.239067718, 2.9876766e-08, 1, -1.0858863e-07, -0.239067718, 1.12582441e-07, 0.971002877)
+end)
+
+local Tab = Window:NewTab("LBosses")
+
+local Section = Tab:NewSection("Creator Version")
+
+-- Заголовок
+Section:NewLabel("Bosses")
+
+Section:NewButton("Auto-Kill", "ButtonInfo", function()
+
+local UserInputService = game:GetService("UserInputService")
+
+local isRunning = false -- Переменная для отслеживания состояния выполнения скрипта
+
+-- Функция, которая будет выполняться постоянно
+local function repeatTask()
+    while true do
+        if isRunning then
+            local player = game.Players.LocalPlayer
+Workspace.Boss.Torso.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0 , 0 , -3)
+            wait(0.2) -- Задержка в 1 секунду между повторениями (можете изменить по необходимости)
+        else
+            wait(0.1) -- Ждем немного, чтобы избежать излишней нагрузки на процессор
+        end
+    end
+end
+
+-- Обработчик нажатий клавиш
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if input.UserInputType == Enum.UserInputType.Keyboard then
+        if input.KeyCode == Enum.KeyCode.P then
+            isRunning = false -- Останавливаем выполнение скрипта
+            print("Скрипт остановлен.")
+        elseif input.KeyCode == Enum.KeyCode.J then
+            isRunning = true -- Запускаем выполнение скрипта
+            print("Скрипт запущен.")
+        end
+    end
+end)
+
+-- Запускаем функцию в отдельном потоке
+repeatTask()
+local player = game.Players.LocalPlayer
+player.Character.HumanoidRootPart.CFrame = CFrame.new(-3.45624423, -103.310448, 407.252533, 0.971002877, -3.05039038e-09, 0.239067718, 2.9876766e-08, 1, -1.0858863e-07, -0.239067718, 1.12582441e-07, 0.971002877)
+end)
+
+Section:NewButton("Godmode (BETA!)", "ButtonInfo", function()
+-- Функция для удаления всех объектов в Attacks
+local function deleteAllInAttacks()
+    while true do
+        -- Проверяем, существует ли папка Attacks
+        local attacksFolder = workspace:FindFirstChild("Attacks")
+        
+        if attacksFolder then
+            -- Удаляем все объекты в папке Attacks
+            for _, child in ipairs(attacksFolder:GetChildren()) do
+                child:Destroy() -- Удаляем объект
+            end
+            print("Все объекты в 'Attacks' были удалены.")
+        else
+            print("Папка 'Attacks' не найдена в Workspace.")
+        end
+        
+        wait(0.01) -- Ждем 1 секунду перед следующей итерацией
+    end
+end
+
+-- Вызов функции удаления
+deleteAllInAttacks()
+
+end)
