@@ -1,0 +1,799 @@
+-- Создаем ScreenGui для отображения сообщения
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui") -- Получаем PlayerGui игрока
+
+local screenGui = Instance.new("ScreenGui") -- Создаем новый ScreenGui
+screenGui.Name = "MessageGui" -- Назначаем имя
+screenGui.Parent = playerGui -- Устанавливаем родительский объект
+
+-- Создаем TextLabel для сообщения
+local textLabel = Instance.new("TextLabel")
+textLabel.Size = UDim2.new(0, 700, 0, 50) -- Размер текстового элемента
+textLabel.Position = UDim2.new(0.5, -350, 0.5, -25) -- Положение текстового элемента (центр экрана)
+textLabel.BackgroundTransparency = 1 -- Прозрачность фона (полностью прозрачный)
+textLabel.TextColor3 = Color3.new(1, 1, 1) -- Цвет текста (белый)
+textLabel.TextStrokeColor3 = Color3.new(0, 0, 0) -- Цвет обводки текста (черный)
+textLabel.TextStrokeTransparency = 0 -- Прозрачность обводки текста
+textLabel.TextScaled = true -- Масштаб текста
+textLabel.Text = "Welcome To SSwendeRT Script." -- Ваше сообщение
+textLabel.Parent = screenGui -- Устанавливаем родительский элемент
+
+-- Функция для показания сообщения на экране
+local function showMessage()
+    textLabel.Visible = true -- Делаем текст видимым
+    wait(3) -- Ждем 3 секунды
+    textLabel.Visible = false -- Прячем текст после ожидания
+end
+
+-- Запускаем функцию показа сообщения
+showMessage()
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Robojini/Tuturial_UI_Library/main/UI_Template_1"))()
+--[[ 
+В данный момент стоит тема "RJTheme3" ,
+вы можете использовать другую тему приведённую ниже -
+"RJTheme1"
+"RJTheme2"
+"RJTheme3"
+"RJTheme4"
+"RJTheme5"
+"RJTheme6"
+"RJTheme7"
+"RJTheme8"
+//////////////////////////////////////////////////////////////////
+
+Что бы сделать свою тему , уберите часть скрипта из "комминтариев" ,
+который находится чуть ниже , и вместо "RJTheme3" в переменной "Windows" - 
+напишите переменную которая используется в скрипте чуть ниже .
+]]
+--[[
+local colors = {
+	-- Цвет фона у Секций
+    SchemeColor = Color3.fromRGB(150, 72, 148),
+	-- Цвет фона в правой части UI
+	Background = Color3.fromRGB(15,15,15),
+	-- Цвет фона в левой части UI
+    Header = Color3.fromRGB(15,15,15),
+	-- Цвет текста
+    TextColor = Color3.fromRGB(255,255,255),
+	-- Цвет фона у кнопок
+    ElementColor = Color3.fromRGB(20, 20, 20)
+}
+]]
+-- Создать окно UI
+local Window = Library.CreateLib("SSwendRT", "RJTheme3")
+
+-- Секция
+local Tab = Window:NewTab("Undertale Timeline Reset")
+
+-- Подсекция
+local Section = Tab:NewSection("Free Version")
+
+-- Заголовок
+Section:NewLabel("Farm")
+
+-- Кнопка
+Section:NewButton("Teleport Souls (+Pumkins}", "ButtonInfo", function()
+local player = game.Players.LocalPlayer -- Получаем локального игрока
+local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Получаем HumanoidRootPart персонажа
+local blacklistedFolder = game.Workspace:FindFirstChild("Blacklisted") -- Находим папку Blacklisted
+
+-- Функция для телепортации объектов к персонажу
+local function teleportObjects()
+    if not blacklistedFolder then
+        warn("Папка 'Blacklisted' не найдена в Workspace.")
+        return
+    end
+
+    for _, object in ipairs(blacklistedFolder:GetChildren()) do
+        if object.Name == "Soul" or object.Name == "Pumpkin" or object.Name == "GoldIngot" or object.Name == "TCoin" or object.Name == "DSoul" then
+            -- Телепортируем объект к персонажу
+            object.CFrame = humanoidRootPart.CFrame + Vector3.new(0, 3, 0) -- Немного выше, чтобы не застрять
+            print(object.Name .. " телепортирован к персонажу.")
+        end
+    end
+end
+
+-- Первоначальная телепортация объектов при запуске
+teleportObjects()
+
+-- Обработчик нажатия клавиши P для повторной телепортации
+local UserInputService = game:GetService("UserInputService")
+
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if not gameProcessedEvent and input.KeyCode == Enum.KeyCode.P then
+        teleportObjects() -- Повторная телепортация при нажатии P
+    end
+end)
+
+end)
+
+
+Section:NewButton("Find SnowPile", "ButtonInfo", function()
+local player = game.Players.LocalPlayer -- Получаем локального игрока
+local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Получаем HumanoidRootPart персонажа
+local blacklistedFolder = game.Workspace:FindFirstChild("Blacklisted") -- Находим папку Blacklisted
+
+-- Функция для телепортации игрока к объекту Snow Pile
+local function teleportToSnowPile()
+    if not blacklistedFolder then
+        warn("Папка 'Blacklisted' не найдена в Workspace.")
+        return
+    end
+
+    local snowPile = blacklistedFolder:FindFirstChild("Snow Pile") -- Находим объект Snow Pile
+    if snowPile then
+        -- Телепортируем игрока к объекту Snow Pile
+        humanoidRootPart.CFrame = snowPile.CFrame + Vector3.new(0, 3, 0) -- Немного выше, чтобы не застрять
+        print("Игрок телепортирован к 'Snow Pile'.")
+    else
+        warn("Объект 'Snow Pile' не найден в 'Blacklisted'.")
+    end
+end
+
+-- Вызываем функцию телепортации
+teleportToSnowPile()
+
+end)
+
+Section:NewLabel("ESP")
+
+Section:NewButton("Snow Pile ESP", "ButtonInfo", function()
+-- Функция для добавления красной обводки к объекту Snow Pile
+local function addOutlineToSnowPiles()
+    local blacklistedFolder = game.Workspace:FindFirstChild("Blacklisted") -- Находим папку Blacklisted
+    if not blacklistedFolder then
+        warn("Папка 'Blacklisted' не найдена.")
+        return
+    end
+
+    -- Перебираем все объекты в папке Blacklisted
+    for _, item in ipairs(blacklistedFolder:GetChildren()) do
+        if item.Name == "Snow Pile" then
+            -- Проверяем, есть ли у объекта уже Highlight
+            local highlight = item:FindFirstChildOfClass("Highlight")
+            if not highlight then
+                -- Если Highlight отсутствует, создаем его
+                highlight = Instance.new("Highlight")
+                highlight.Parent = item -- Устанавливаем родительским элементом объект Snow Pile
+                
+                -- Устанавливаем цвет обводки в красный
+                highlight.OutlineColor = Color3.new(1, 0, 0) -- Красный цвет
+                highlight.FillColor = Color3.new(1, 0, 0) -- Красный цвет для заполнения (можно сделать прозрачным)
+                highlight.FillTransparency = 0.5 -- Прозрачность заполнения (0 = непрозрачный, 1 = прозрачный)
+            end
+        end
+    end
+end
+
+-- Вызываем функцию добавления обводки
+addOutlineToSnowPiles()
+
+end)
+
+Section:NewButton("DODGES/HP ESP", "ButtonInfo", function()
+-- Функция для создания BillboardGui с информацией о уклонениях (Dodges)
+local function createDodgesDisplay(player)
+    player.CharacterAdded:Wait() -- Ждем, пока персонаж появится
+
+    local function setupDisplay(character)
+        local head = character:WaitForChild("Head") -- Получаем голову персонажа
+
+        -- Проверяем, есть ли у игрока объект Dodges
+        local dodges = character:FindFirstChild("Dodges")
+        if not dodges or not dodges:IsA("IntValue") then
+            warn(player.Name .. " не имеет объекта Dodges.")
+            return
+        end
+
+        -- Создаем BillboardGui
+        local billboardGui = Instance.new("BillboardGui")
+        billboardGui.Adornee = head -- Привязываем к голове игрока
+        billboardGui.Size = UDim2.new(0, 200, 0, 50)
+        billboardGui.StudsOffset = Vector3.new(0, 3, 0) -- Смещение над головой
+        billboardGui.Parent = head
+
+        -- Создаем TextLabel для отображения количества уклонений
+        local textLabel = Instance.new("TextLabel")
+        textLabel.Size = UDim2.new(1, 0, 1, 0)
+        textLabel.BackgroundTransparency = 1
+        textLabel.TextColor3 = Color3.new(1, 1, 1) -- Цвет текста (белый)
+        textLabel.TextScaled = true
+        textLabel.Parent = billboardGui
+
+        -- Обновляем значение уклонений
+        while true do
+            if dodges then
+                textLabel.Text = player.Name .. " - Dodges: " .. dodges.Value
+            else
+                textLabel.Text = player.Name .. " - Dodges: 0"
+            end
+            wait(1) -- Обновляем каждую секунду
+        end
+    end
+
+    -- Подключаем функцию на случай, если персонаж уже загружен
+    if player.Character then
+        setupDisplay(player.Character)
+    end
+
+    player.CharacterAdded:Connect(setupDisplay) -- Подключаем к событию CharacterAdded
+end
+
+-- Функция для установки дисплея для всех текущих игроков
+local function setupDodgesDisplayForAllPlayers()
+    for _, player in ipairs(game.Players:GetPlayers()) do
+        createDodgesDisplay(player)
+    end
+end
+
+-- Подключаем функцию к событию PlayerAdded
+game.Players.PlayerAdded:Connect(function(player)
+    createDodgesDisplay(player) -- Создаем дисплей для нового игрока
+end)
+
+-- Устанавливаем дисплей для текущих игроков при запуске
+setupDodgesDisplayForAllPlayers()
+
+end)
+
+
+Section:NewLabel("DETECTORS")
+
+Section:NewButton("DETECTOR", "ButtonInfo", function()
+-- Устанавливаем необходимые сервисы
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer -- Получаем локального игрока
+local playerGui = player:WaitForChild("PlayerGui") -- Получаем PlayerGui игрока
+
+-- Создаем ScreenGui для отображения информации
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "SoulCounterGui" -- Назначаем имя для удобства
+screenGui.Parent = playerGui -- Добавляем ScreenGui в PlayerGui
+
+-- Создаем текстовый элемент для отображения количества Soul, DSoul и Snow Pile
+local textLabel = Instance.new("TextLabel")
+textLabel.Size = UDim2.new(0, 600, 0, 50) -- Размер текстового элемента
+textLabel.Position = UDim2.new(0.5, -300, 0, 10) -- Положение текстового элемента в верхней части экрана
+textLabel.BackgroundTransparency = 1 -- Прозрачность фона (полностью прозрачный)
+textLabel.TextColor3 = Color3.new(1, 1, 1) -- Цвет текста (белый)
+textLabel.TextScaled = true -- Масштаб текста
+textLabel.TextStrokeTransparency = 0.5 -- Прозрачность обводки текста для лучшей читаемости
+textLabel.Parent = screenGui -- Устанавливаем родительский элемент
+
+-- Функция для подсчета объектов Soul, DSoul и Snow Pile
+local function countItems()
+    while true do
+        local blacklistedFolder = game.Workspace:FindFirstChild("Blacklisted") -- Находим папку Blacklisted
+        if blacklistedFolder then
+            local soulCount = 0
+            local dSoulCount = 0
+            local snowPileCount = 0
+
+            -- Перебираем все объекты в папке Blacklisted
+            for _, item in ipairs(blacklistedFolder:GetChildren()) do
+                if item.Name == "Soul" then
+                    soulCount = soulCount + 1 -- Увеличиваем счетчик при нахождении объекта Soul
+                elseif item.Name == "DSoul" then
+                    dSoulCount = dSoulCount + 1 -- Увеличиваем счетчик при нахождении объекта DSoul
+                elseif item.Name == "Snow Pile" then
+                    snowPileCount = snowPileCount + 1 -- Увеличиваем счетчик при нахождении объекта Snow Pile
+                end
+            end
+
+            -- Обновляем текстовый элемент с количеством найденных объектов
+            textLabel.Text = "Soul: " .. soulCount .. " | DSoul: " .. dSoulCount .. " | Snow Pile: " .. snowPileCount
+        else
+            textLabel.Text = "Папка 'Blacklisted' не найдена."
+        end
+
+        -- Ждем 1 секунду перед следующим обновлением
+        wait(1)
+    end
+end
+
+-- Запускаем функцию подсчета объектов
+countItems()
+
+end)
+
+
+Section:NewButton("Get All Attacks", "ButtonInfo", function()
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer -- Получаем локального игрока (это будет ваш персонаж)
+local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа
+local backpack = player:WaitForChild("Backpack") -- Получаем рюкзак игрока
+
+-- Функция для копирования предметов из инвентаря игроков
+local function copyItemsToPlayer()
+    for _, otherPlayer in ipairs(Players:GetPlayers()) do
+        if otherPlayer ~= player then -- Игнорируем самого себя
+            local otherBackpack = otherPlayer:FindFirstChild("Backpack") -- Получаем рюкзак другого игрока
+            if otherBackpack then
+                for _, item in ipairs(otherBackpack:GetChildren()) do
+                    -- Копируем предмет
+                    local newItem = item:Clone()
+                    newItem.Parent = backpack -- Добавляем предмет в рюкзак вашего персонажа
+                end
+            end
+        end
+    end
+end
+
+-- Вызываем функцию копирования предметов
+copyItemsToPlayer()
+print("Предметы скопированы из инвентарей других игроков в ваш инвентарь.")
+
+end)
+
+Section:NewLabel("Other")
+
+Section:NewButton("TELEPORT", "ButtonInfo", function()
+mouse = game.Players.LocalPlayer:GetMouse()
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "teleport"
+tool.Activated:connect(function()
+local pos = mouse.Hit+Vector3.new(0,2.5,0)
+pos = CFrame.new(pos.X,pos.Y,pos.Z)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+Section:NewButton("Fly Gui", "ButtonInfo", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))()
+end)
+
+Section:NewButton("Noclip Gui", "ButtonInfo", function()
+local Workspace = game:GetService("Workspace")
+local CoreGui = game:GetService("CoreGui")
+local Players = game:GetService("Players")
+local Noclip = Instance.new("ScreenGui")
+local BG = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local Toggle = Instance.new("TextButton")
+local StatusPF = Instance.new("TextLabel")
+local Status = Instance.new("TextLabel")
+local Plr = Players.LocalPlayer
+local Clipon = false
+
+Noclip.Name = "Noclip"
+Noclip.Parent = game.CoreGui
+
+BG.Name = "BG"
+BG.Parent = Noclip
+BG.BackgroundColor3 = Color3.new(0.0980392, 0.0980392, 0.0980392)
+BG.BorderColor3 = Color3.new(0.0588235, 0.0588235, 0.0588235)
+BG.BorderSizePixel = 2
+BG.Position = UDim2.new(0.149479166, 0, 0.82087779, 0)
+BG.Size = UDim2.new(0, 210, 0, 127)
+BG.Active = true
+BG.Draggable = true
+
+Title.Name = "Title"
+Title.Parent = BG
+Title.BackgroundColor3 = Color3.new(0.266667, 0.00392157, 0.627451)
+Title.BorderColor3 = Color3.new(0.180392, 0, 0.431373)
+Title.BorderSizePixel = 2
+Title.Size = UDim2.new(0, 210, 0, 33)
+Title.Font = Enum.Font.Highway
+Title.Text = "Noclip"
+Title.TextColor3 = Color3.new(1, 1, 1)
+Title.FontSize = Enum.FontSize.Size32
+Title.TextSize = 30
+Title.TextStrokeColor3 = Color3.new(0.180392, 0, 0.431373)
+Title.TextStrokeTransparency = 0
+
+Toggle.Parent = BG
+Toggle.BackgroundColor3 = Color3.new(0.266667, 0.00392157, 0.627451)
+Toggle.BorderColor3 = Color3.new(0.180392, 0, 0.431373)
+Toggle.BorderSizePixel = 2
+Toggle.Position = UDim2.new(0.152380958, 0, 0.374192119, 0)
+Toggle.Size = UDim2.new(0, 146, 0, 36)
+Toggle.Font = Enum.Font.Highway
+Toggle.FontSize = Enum.FontSize.Size28
+Toggle.Text = "Toggle"
+Toggle.TextColor3 = Color3.new(1, 1, 1)
+Toggle.TextSize = 25
+Toggle.TextStrokeColor3 = Color3.new(0.180392, 0, 0.431373)
+Toggle.TextStrokeTransparency = 0
+
+StatusPF.Name = "StatusPF"
+StatusPF.Parent = BG
+StatusPF.BackgroundColor3 = Color3.new(1, 1, 1)
+StatusPF.BackgroundTransparency = 1
+StatusPF.Position = UDim2.new(0.314285725, 0, 0.708661377, 0)
+StatusPF.Size = UDim2.new(0, 56, 0, 20)
+StatusPF.Font = Enum.Font.Highway
+StatusPF.FontSize = Enum.FontSize.Size24
+StatusPF.Text = "Status:"
+StatusPF.TextColor3 = Color3.new(1, 1, 1)
+StatusPF.TextSize = 20
+StatusPF.TextStrokeColor3 = Color3.new(0.333333, 0.333333, 0.333333)
+StatusPF.TextStrokeTransparency = 0
+StatusPF.TextWrapped = true
+
+Status.Name = "Status"
+Status.Parent = BG
+Status.BackgroundColor3 = Color3.new(1, 1, 1)
+Status.BackgroundTransparency = 1
+Status.Position = UDim2.new(0.580952346, 0, 0.708661377, 0)
+Status.Size = UDim2.new(0, 56, 0, 20)
+Status.Font = Enum.Font.Highway
+Status.FontSize = Enum.FontSize.Size14
+Status.Text = "off"
+Status.TextColor3 = Color3.new(0.666667, 0, 0)
+Status.TextScaled = true
+Status.TextSize = 14
+Status.TextStrokeColor3 = Color3.new(0.180392, 0, 0.431373)
+Status.TextWrapped = true
+Status.TextXAlignment = Enum.TextXAlignment.Left
+
+
+Toggle.MouseButton1Click:connect(function()
+	if Status.Text == "off" then
+		Clipon = true
+		Status.Text = "on"
+		Status.TextColor3 = Color3.new(0,185,0)
+		Stepped = game:GetService("RunService").Stepped:Connect(function()
+			if not Clipon == false then
+				for a, b in pairs(Workspace:GetChildren()) do
+                if b.Name == Plr.Name then
+                for i, v in pairs(Workspace[Plr.Name]:GetChildren()) do
+                if v:IsA("BasePart") then
+                v.CanCollide = false
+                end end end end
+			else
+				Stepped:Disconnect()
+			end
+		end)
+	elseif Status.Text == "on" then
+		Clipon = false
+		Status.Text = "off"
+		Status.TextColor3 = Color3.new(170,0,0)
+	end
+end)
+end)
+
+Section:NewButton("DEX", "ButtonInfo", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Neon-Fox/roblox-scripts/main/Dex-V3"))()
+end)
+
+
+-- Переключатель
+Section:NewToggle("ToggleText", "ToggleInfo", function(state)
+    if state then
+        print("Toggle On")
+    else
+        print("Toggle Off")
+    end
+end)
+
+-- Слайдер
+Section:NewSlider("SliderText", "SliderInfo", 500, 0, function(s) -- 500 (Макс. значение) | 0 (Мин. значение)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+-- Текст Бокс
+Section:NewTextBox("TextboxText", "TextboxInfo", function(txt)
+	print(txt)
+end)
+
+-- Бинд на клавиши
+Section:NewKeybind("KeybindText", "KeybindInfo", Enum.KeyCode.F, function()
+
+end)
+
+-- Дропдаун
+Section:NewDropdown("DropdownText", "DropdownInf", {"Option 1", "Option 2", "Option 3"}, function(currentOption)
+    print(currentOption)
+end)
+
+local Tab = Window:NewTab("UDR Teleports")
+
+local Section = Tab:NewSection("Creator Version")
+
+Section:NewLabel("Scripts")
+
+Section:NewButton("Teleport LoadScren", "ButtonInfo", function()
+local player = game.Players.LocalPlayer -- Получаем локального игрока
+local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Получаем HumanoidRootPart персонажа
+
+-- Функция для телепортации игрока к объекту Part
+local function teleportToPart()
+    local mapFolder = game.Workspace:FindFirstChild("Map") -- Находим папку Map
+    if not mapFolder then
+        warn("Папка 'Map' не найдена в Workspace.")
+        return
+    end
+
+    local teleportsFolder = mapFolder:FindFirstChild("Teleports") -- Находим папку Teleports
+    if not teleportsFolder then
+        warn("Папка 'Teleports' не найдена в 'Map'.")
+        return
+    end
+
+    local saveScreenFolder = teleportsFolder:FindFirstChild("Save Screen") -- Находим папку Save Screen
+    if not saveScreenFolder then
+        warn("Папка 'Save Screen' не найдена в 'Teleports'.")
+        return
+    end
+
+    local baseFolder = saveScreenFolder:FindFirstChild("Base") -- Находим папку Base
+    if not baseFolder then
+        warn("Папка 'Base' не найдена в 'Save Screen'.")
+        return
+    end
+
+    local part = baseFolder:FindFirstChild("Part") -- Находим объект Part в Base
+    if not part then
+        warn("Объект 'Part' не найден в 'Base'.")
+        return
+    end
+
+    -- Телепортируем игрока к Part
+    humanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 3, 0) -- Телепортируем немного выше, чтобы не застрять в объекте
+    print("Игрок телепортирован к 'Part'.")
+end
+
+-- Запускаем функцию телепортации
+teleportToPart()
+
+end)
+
+Section:NewButton("Teleport to Snowdin}", "ButtonInfo", function()
+
+local player = game.Players.LocalPlayer -- Получаем локального игрока
+local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Получаем HumanoidRootPart персонажа
+
+-- Функция для телепортации персонажа к объекту Part
+local function teleportToPart()
+    local mapFolder = game.Workspace:FindFirstChild("Map") -- Находим папку Map
+    if not mapFolder then
+        warn("Папка 'Map' не найдена в Workspace.")
+        return
+    end
+
+    local snowdinFolder = mapFolder:FindFirstChild("Snowdin") -- Находим папку Snowdin
+    if not snowdinFolder then
+        warn("Папка 'Snowdin' не найдена в 'Map'.")
+        return
+    end
+
+    local baseFolder = snowdinFolder:FindFirstChild("Base") -- Находим папку Base
+    if not baseFolder then
+        warn("Папка 'Base' не найдена в 'Snowdin'.")
+        return
+    end
+
+    local part = baseFolder:FindFirstChild("Part") -- Находим объект Part в Base
+    if not part then
+        warn("Объект 'Part' не найден в 'Base'.")
+        return
+    end
+
+    -- Телепортируем персонажа к Part
+    humanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 3, 0) -- Телепортируем немного выше, чтобы не застрять в объекте
+    print("Персонаж телепортирован к 'Part'.")
+end
+
+-- Запускаем функцию телепортации
+teleportToPart()
+
+end)
+
+Section:NewButton("Lobby", "ButtonInfo", function()
+-- Устанавливаем необходимые сервисы
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer -- Получаем локального игрока
+local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
+
+-- Функция для телепортации игрока
+local function teleportToSpawnLocation()
+    local mapFolder = game.Workspace:FindFirstChild("Map") -- Находим папку Map
+    if not mapFolder then
+        warn("Папка 'Map' не найдена.")
+        return
+    end
+
+    local characterSelectionFolder = mapFolder:FindFirstChild("CharacterSelection") -- Находим папку CharacterSelection
+    if not characterSelectionFolder then
+        warn("Папка 'CharacterSelection' не найдена.")
+        return
+    end
+
+    local lobbyFolder = characterSelectionFolder:FindFirstChild("Lobby") -- Находим папку Lobby
+    if not lobbyFolder then
+        warn("Папка 'Lobby' не найдена.")
+        return
+    end
+
+    local spawnLocation = lobbyFolder:FindFirstChild("SpawnLocation") -- Находим объект SpawnLocation
+    if not spawnLocation then
+        warn("Объект 'SpawnLocation' не найден.")
+        return
+    end
+
+    -- Проверяем, есть ли у объекта SpawnLocation первичная часть (PrimaryPart)
+    if spawnLocation:IsA("Model") and not spawnLocation.PrimaryPart then
+        warn("Объект 'SpawnLocation' не имеет установленной первичной части (PrimaryPart).")
+        return
+    end
+
+    -- Телепортируем игрока к SpawnLocation
+    character:SetPrimaryPartCFrame(spawnLocation.CFrame)
+end
+
+-- Вызываем функцию телепортации
+teleportToSpawnLocation()
+
+end)
+
+Section:NewButton("Halloween Map", "ButtonInfo", function()
+local player = game.Players.LocalPlayer -- Получаем локального игрока
+local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Получаем HumanoidRootPart персонажа
+
+-- Функция для телепортации игрока к объекту Spawn
+local function teleportToSpawn()
+    local mapFolder = game.Workspace:FindFirstChild("Map") -- Находим папку Map
+    if not mapFolder then
+        warn("Папка 'Map' не найдена в Workspace.")
+        return
+    end
+
+    local teleportsFolder = mapFolder:FindFirstChild("Teleports") -- Находим папку Teleports
+    if not teleportsFolder then
+        warn("Папка 'Teleports' не найдена в 'Map'.")
+        return
+    end
+
+    local halloweenMapFolder = teleportsFolder:FindFirstChild("Halloween Map") -- Находим папку Halloween Map
+    if not halloweenMapFolder then
+        warn("Папка 'Halloween Map' не найдена в 'Teleports'.")
+        return
+    end
+
+    local spawnPart = halloweenMapFolder:FindFirstChild("Spawn") -- Находим объект Spawn
+    if not spawnPart then
+        warn("Объект 'Spawn' не найден в 'Halloween Map'.")
+        return
+    end
+
+    -- Телепортируем игрока к объекту Spawn
+    humanoidRootPart.CFrame = spawnPart.CFrame + Vector3.new(0, 3, 0) -- Немного выше, чтобы не застрять
+    print("Игрок телепортирован к 'Spawn'.")
+end
+
+-- Вызываем функцию телепортации
+teleportToSpawn()
+
+end)
+
+Section:NewButton("AntiVoid", "ButtonInfo", function()
+local player = game.Players.LocalPlayer -- Получаем локального игрока
+local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Получаем HumanoidRootPart персонажа
+
+-- Функция для телепортации игрока к объекту Spawn
+local function teleportToSpawn()
+    local mapFolder = game.Workspace:FindFirstChild("Map") -- Находим папку Map
+    if not mapFolder then
+        warn("Папка 'Map' не найдена в Workspace.")
+        return
+    end
+
+    local teleportsFolder = mapFolder:FindFirstChild("Teleports") -- Находим папку Teleports
+    if not teleportsFolder then
+        warn("Папка 'Teleports' не найдена в 'Map'.")
+        return
+    end
+
+    local antiVoidFolder = teleportsFolder:FindFirstChild("Anti-Void") -- Находим папку Anti-Void
+    if not antiVoidFolder then
+        warn("Папка 'Anti-Void' не найдена в 'Teleports'.")
+        return
+    end
+
+    local spawnPart = antiVoidFolder:FindFirstChild("Spawn") -- Находим объект Spawn
+    if not spawnPart then
+        warn("Объект 'Spawn' не найден в 'Anti-Void'.")
+        return
+    end
+
+    -- Телепортируем игрока к объекту Spawn
+    humanoidRootPart.CFrame = spawnPart.CFrame + Vector3.new(0, 3, 0) -- Немного выше, чтобы не застрять
+    print("Игрок телепортирован к 'Spawn'.")
+end
+
+-- Вызываем функцию телепортации
+teleportToSpawn()
+
+end)
+
+Section:NewButton("Void", "ButtonInfo", function()
+local player = game.Players.LocalPlayer -- Получаем локального игрока
+local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Получаем HumanoidRootPart персонажа
+
+-- Функция для телепортации игрока к объекту Spawn
+local function teleportToSpawn()
+    local mapFolder = game.Workspace:FindFirstChild("Map") -- Находим папку Map
+    if not mapFolder then
+        warn("Папка 'Map' не найдена в Workspace.")
+        return
+    end
+
+    local teleportsFolder = mapFolder:FindFirstChild("Teleports") -- Находим папку Teleports
+    if not teleportsFolder then
+        warn("Папка 'Teleports' не найдена в 'Map'.")
+        return
+    end
+
+    local voidFolder = teleportsFolder:FindFirstChild("Void") -- Находим папку Void
+    if not voidFolder then
+        warn("Папка 'Void' не найдена в 'Teleports'.")
+        return
+    end
+
+    local spawnPart = voidFolder:FindFirstChild("Spawn") -- Находим объект Spawn
+    if not spawnPart then
+        warn("Объект 'Spawn' не найден в 'Void'.")
+        return
+    end
+
+    -- Телепортируем игрока к объекту Spawn
+    humanoidRootPart.CFrame = spawnPart.CFrame + Vector3.new(0, 3, 0) -- Немного выше, чтобы не застрять
+    print("Игрок телепортирован к 'Spawn'.")
+end
+
+-- Вызываем функцию телепортации
+teleportToSpawn()
+
+end)
+
+Section:NewButton("Doodle Sphere", "ButtonInfo", function()
+local player = game.Players.LocalPlayer -- Получаем локального игрока
+local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart") -- Получаем HumanoidRootPart персонажа
+
+-- Функция для телепортации игрока к объекту Spawn
+local function teleportToSpawn()
+    local mapFolder = game.Workspace:FindFirstChild("Map") -- Находим папку Map
+    if not mapFolder then
+        warn("Папка 'Map' не найдена в Workspace.")
+        return
+    end
+
+    local teleportsFolder = mapFolder:FindFirstChild("Teleports") -- Находим папку Teleports
+    if not teleportsFolder then
+        warn("Папка 'Teleports' не найдена в 'Map'.")
+        return
+    end
+
+    local doodleSphereFolder = teleportsFolder:FindFirstChild("Doodle Sphere") -- Находим папку Doodle Sphere
+    if not doodleSphereFolder then
+        warn("Папка 'Doodle Sphere' не найдена в 'Teleports'.")
+        return
+    end
+
+    local spawnPart = doodleSphereFolder:FindFirstChild("Spawn") -- Находим объект Spawn
+    if not spawnPart then
+        warn("Объект 'Spawn' не найден в 'Doodle Sphere'.")
+        return
+    end
+
+    -- Телепортируем игрока к объекту Spawn
+    humanoidRootPart.CFrame = spawnPart.CFrame + Vector3.new(0, 3, 0) -- Немного выше, чтобы не застрять
+    print("Игрок телепортирован к 'Spawn'.")
+end
+
+-- Вызываем функцию телепортации
+teleportToSpawn()
+
+end)
