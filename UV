@@ -1,0 +1,76 @@
+local player = game.Players.LocalPlayer.Character
+local p = game.Players.LocalPlayer.Character.HumanoidRootPart
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Robojini/Tuturial_UI_Library/main/UI_Template_1"))()
+
+
+local Window = Library.CreateLib("SSwendRT", "RJTheme3")
+
+-- Секция
+local Tab = Window:NewTab("Console")
+
+local Tab = Window:NewTab("Main")
+-- Подсекция
+local Section = Tab:NewSection("Creator Version")
+
+-- Заголовок
+Section:NewLabel("Farm")
+
+-- Кнопка
+Section:NewButton("Get Badges", "ButtonInfo", function()
+p.CFrame = Workspace.badges:GetChildren()[1].CFrame
+wait(2)
+p.CFrame = Workspace.badges:GetChildren()[2].CFrame
+wait(2)
+p.CFrame = Workspace.badges:GetChildren()[3].CFrame
+wait(2)
+p.CFrame = Workspace.badges:GetChildren()[4].CFrame
+wait(2)
+p.CFrame = Workspace.badges:GetChildren()[1].CFrame
+wait(2)
+p.CFrame = Workspace.badges:GetChildren()[2].CFrame
+wait(2)
+p.CFrame = Workspace.badges:GetChildren()[3].CFrame
+wait(2)
+p.CFrame = Workspace.badges:GetChildren()[4].CFrame
+wait(2)
+end)
+
+Section:NewButton("No Barrier", "ButtonInfo", function()
+Workspace.Realms:FindFirstChild("Undertale Lobby"):FindFirstChild("UT MAP"):FindFirstChild("Damage Part"):Destroy()
+Workspace.Realms:FindFirstChild("Undertale Lobby"):FindFirstChild("UT MAP"):FindFirstChild("Damage Part"):Destroy()
+Workspace.Realms:FindFirstChild("Undertale Lobby"):FindFirstChild("UT MAP"):FindFirstChild("Damage Part"):Destroy()
+Workspace.Realms:FindFirstChild("Undertale Lobby"):FindFirstChild("UT MAP"):FindFirstChild("Damage Part"):Destroy()
+end)
+
+Section:NewButton("Admin Weapons", "ButtonInfo", function()
+Workspace.Stuff.Stick.Parent = player
+Workspace.Stuff:FindFirstChild("Time Dagger").Parent = player
+Workspace.Stuff:FindFirstChild("Creatas").Parent = player
+Workspace.Stuff:FindFirstChild("Wild Bone").Parent = player
+Workspace.Stuff:FindFirstChild("Lethal Deal V2").Parent = player
+Workspace:FindFirstChild("Dark Blaster").Parent = player
+Workspace:FindFirstChild("Dance Blaster").Parent = player
+Workspace:FindFirstChild("LightLord Blaster").Parent = player
+Workspace:FindFirstChild("FellSwap Papyrus Blaster").Parent = player
+end)
+
+Section:NewButton("Weapons", "ButtonInfo", function()
+game.Lighting:FindFirstChild("Core infused blade").Parent = player
+game.Lighting:FindFirstChild("Cutlass of the sea").Parent = player
+game.Lighting:FindFirstChild("DT stick").Parent = player
+game.Lighting:FindFirstChild("Hyperblaster").Parent = player
+game.Lighting:FindFirstChild("Key of judgement").Parent = player
+game.Lighting:FindFirstChild("Key of madness").Parent = player
+game.Lighting:FindFirstChild("MADNESS").Parent = player
+game.Lighting:FindFirstChild("Omega Key").Parent = player
+game.Lighting:FindFirstChild("Promised sans bone").Parent = player
+game.Lighting:FindFirstChild("Spear of CHAOS").Parent = player
+game.Lighting:FindFirstChild("Spear scythe").Parent = player
+game.Lighting:FindFirstChild("Sword of HATE").Parent = player
+game.Lighting:FindFirstChild("THE TRUE SPEAR").Parent = player
+game.Lighting:FindFirstChild("The soul sword.").Parent = player
+end)
+
+Section:NewButton("Weapons", "ButtonInfo", function()
+game.Workspace:FindFirstChild("Damage Part"):Destroy()
+end)
